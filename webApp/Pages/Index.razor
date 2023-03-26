@@ -1,0 +1,24 @@
+﻿@page "/"
+
+<div class="row">
+ <EditForm Model="User" OnValidSubmit="Login">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="row">
+            @if(Error!= null && Error != string.Empty)
+            {
+                @Error
+                <hr/>
+            }
+            <div class="mb-3 col-6">
+                <label class="form-label fw-bold">UserName</label>
+                <InputText class="form-control" @bind-Value="@User.UserName" />
+            </div>
+            <div class="mb-3 col-6">
+                <label class="form-label fw-bold">Password</label>
+                <InputText class="form-control" @bind-Value="@User.Password" />
+            </div>
+          </div>
+        <button type="submit" class="btn btn-primary">Log-In</button>
+    </EditForm>
+</div>

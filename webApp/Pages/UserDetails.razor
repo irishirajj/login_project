@@ -1,0 +1,109 @@
+﻿@page "/UserDetails"
+
+
+<button type ="button" class="btn btn-secondary btn-sm" @onclick="Showadd">Add User </button>
+<hr/>
+
+<div class="row">
+       @if(Error!= null && Error != string.Empty)
+            {
+                @Error
+                <hr/>
+            }
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Email Id</th>
+                <th>Account Creation Date</th>
+                <th>Manager Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (UsersList != null)
+            {
+                @foreach (var User in UsersList)
+                {
+                    <tr>
+
+                        <td>@User.Name</td>
+                        <td>@User.Address</td>
+                        <td>@User.EmailId</td>
+                        <td>@User.AccCreationDate?.ToString("d")</td>
+                        <td>@User.ManagerName</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+</div>
+
+ @if(showaddmodal)
+ {
+     <div class="modal fade show " style="display:block" tabindex="-1">
+        <div class="modal-dialog">
+            <EditForm Model="@User" OnValidSubmit="@AddUser">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="modal-content">
+                     @if(Error!= null && Error != string.Empty)
+                        {
+                             @Error
+                            <hr/>
+                        }
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">User Name</label>
+                            <InputText class="form-control" @bind-Value="@User.UserName" required />
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <InputText class="form-control" @bind-Value="@User.Password" required />
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <InputText class="form-control" @bind-Value="@User.Name"  required/>
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <InputText class="form-control" @bind-Value="@User.Address"  />
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email Id</label>
+                            <InputText class="form-control" @bind-Value="@User.EmailId"  />
+
+                        </div>                  
+                         <div class="mb-3">
+                            <label class="form-label">Manager Name</label>
+                            <select class="form-select from-select-sm" @bind="@User.ManagerName" required>
+
+                                @if (UsersList != null)
+                                {
+                                    <option value="">Select Manager</option>
+                                    @foreach (var user in UsersList)
+                                    {
+                                        <option value="@user.Name">@user.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        
+                         
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="hideadd">Close</button>
+                        <button type="submit" class="btn btn-primary">Add User</button>
+                      </div>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+ }
